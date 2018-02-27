@@ -4,32 +4,32 @@ import { Card, Button } from "semantic-ui-react";
 import Layout from "../components/Layout";
 import contract from "../ethereum/contract";
 
-class CampaignIndex extends Component {
+class AuctionIndex extends Component {
   static async getInitialProps() {
-    const campaigns = await contract.methods.getDeployedCampaigns().call();
-    return { campaigns };
+    const auctions = await contract.methods.getDeployedAuctions().call();
+    return { auctions };
   }
 
-  renderCampaigns() {
-    const campaigns = this.props.campaigns.map(address => {
+  renderAuctions() {
+    const auctions = this.props.auctions.map(address => {
       return {
         header: address,
-        description: <a>View Campaign</a>,
+        description: <a>View Auction</a>,
         fluid: true
       };
     });
 
-    return <Card.Group items={campaigns} />;
+    return <Card.Group items={auctions} />;
   }
 
   render() {
     return (
       <Layout>
-        <h3>Open Campaigns</h3>
-        {this.renderCampaigns()}
+        <h3>Open Auctions</h3>
+        {this.renderAuctions()}
       </Layout>
     );
   }
 }
 
-export default CampaignIndex;
+export default AuctionIndex;
