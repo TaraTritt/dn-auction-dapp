@@ -1,6 +1,6 @@
 const HDWalletProvider = require("truffle-hdwallet-provider");
 const Web3 = require("web3");
-const compiledFactory = require("./build/<Your Contract>.json"); // get compiled bytecode and ABI (interface)
+const compiledContract = require("./build/DNAuctionFactory.json"); // get compiled bytecode and ABI (interface)
 
 /* Need the following arguments for the provider instantiation below:
     1. Get the mnemonic phrase you should have recieved when you started up MetaMask
@@ -9,8 +9,8 @@ const compiledFactory = require("./build/<Your Contract>.json"); // get compiled
         Steps: sign up for Infura at https://infura.io/, you should recieve an email will all the public ethereum networks - save the Rinkeby URL
 */
 const provider = new HDWalletProvider(
-  "<MetaMask Mnemonic phrase>", //mnemonic generates many accounts
-  "<Infura Provider URL with Access Key>" //provider url with access key
+  "matter virtual list game install tornado genius amused capital kick energy broken", //mnemonic generates many accounts
+  "https://rinkeby.infura.io/HflqAGsVLFBf2cFBMYoq" //provider url with access key
 );
 const web3 = new Web3(provider);
 
@@ -20,10 +20,10 @@ const deploy = async () => {
   console.log("Attempting to deploy contract from account", accounts[0]);
 
   const result = await new web3.eth.Contract(
-    JSON.parse(compiledFactory.interface)
+    JSON.parse(compiledContract.interface)
   )
-    .deploy({ data: compiledFactory.bytecode })
-    .send({ gas: "1000000", from: accounts[0] });
+    .deploy({ data: compiledContract.bytecode })
+    .send({ gas: "5000000", from: accounts[0] });
 
   console.log("Contract deployed to", result.options.address);
 };

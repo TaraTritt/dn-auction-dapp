@@ -5,11 +5,7 @@ const fs = require("fs-extra"); // has extra functions over 'fs' module
 const buildPath = path.resolve(__dirname, "build");
 fs.removeSync(buildPath); // removes all files and folders under build directory
 
-const contractPath = path.resolve(
-  __dirname,
-  "contracts",
-  "<Your Contract>.sol"
-);
+const contractPath = path.resolve(__dirname, "contracts", "DNAuction.sol");
 const source = fs.readFileSync(contractPath, "utf-8"); // path and encoding
 const output = solc.compile(source, 1).contracts;
 
