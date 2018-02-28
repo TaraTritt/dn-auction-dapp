@@ -19,78 +19,6 @@ contract DNAuctionFactory {
     
 }
 
-contract DiscountNote {
-    uint public availableAmount;
-    uint public totalPurchasedAmount;
-    uint public maturityDate;
-    
-    struct Allocation {
-        uint purchasedAmount;
-        uint maturityAmount;
-        bool withdrawnAtMaturity;
-    }
-    
-    mapping(address => Allocation) public allocations;
-    
-    address public issuer;
-    address public auctionManager;
-    
-    modifier issuerOnly() {
-        require(msg.sender == issuer);
-        _;
-    }
-    
-    modifier auctionManagerOnly() {
-        require(msg.sender == issuer);
-        _;
-    }
-    
-    modifier afterMaturity() {
-        require(now >= maturityDate);
-        _;
-    }
-    
-    function DiscountNote(uint _maturityDate, uint _amount, address _issuer, address _auctionManager) public {
-        maturityDate = _maturityDate;
-        availableAmount = _amount;
-        totalPurchasedAmount = 0;
-        
-        issuer = _issuer;
-        auctionManager = _auctionManager;
-    }
-    
-    function setAllocation(uint _purchasedAmount, uint _maturityAmount, address _owner) public auctionManagerOnly {
-        Allocation memory allocation = Allocation({
-            purchasedAmount: _purchasedAmount,
-            maturityAmount: _maturityAmount,
-            withdrawnAtMaturity: false
-        });
-        
-        allocations[_owner] = allocation;
-    }
-    
-    function setTotalPurchasedAmount(uint _totalPurchasedAmount) public auctionManagerOnly {
-        totalPurchasedAmount = _totalPurchasedAmount;
-    }
-    
-    function depositAtMaturity() public issuerOnly payable {
-        require(msg.value > 0);
-    }
-    
-    function withdrawAtMaturity() public afterMaturity returns(bool){
-        Allocation storage allocation = allocations[msg.sender];
-        require(this.balance >= allocation.maturityAmount);
-        allocation.withdrawnAtMaturity = true;
-        if (!msg.sender.send(allocation.maturityAmount)) {
-            // reset withdrawAtMaturity if send fails
-            allocation.withdrawnAtMaturity = false;
-            return false;
-        }
-        
-        return true;
-    }
-}
-
 contract DNAuction {
     // storage variables
     // storage variables are local state variables stored with the contract instance
@@ -313,6 +241,78 @@ contract DNAuction {
                 return false;
             }
         }
+        return true;
+    }
+}
+
+contract DiscountNote {
+    uint public availableAmount;
+    uint public totalPurchasedAmount;
+    uint public maturityDate;
+    
+    struct Allocation {
+        uint purchasedAmount;
+        uint maturityAmount;
+        bool withdrawnAtMaturity;
+    }
+    
+    mapping(address => Allocation) public allocations;
+    
+    address public issuer;
+    address public auctionManager;
+    
+    modifier issuerOnly() {
+        require(msg.sender == issuer);
+        _;
+    }
+    
+    modifier auctionManagerOnly() {
+        require(msg.sender == issuer);
+        _;
+    }
+    
+    modifier afterMaturity() {
+        require(now >= maturityDate);
+        _;
+    }
+    
+    function DiscountNote(uint _maturityDate, uint _amount, address _issuer, address _auctionManager) public {
+        maturityDate = _maturityDate;
+        availableAmount = _amount;
+        totalPurchasedAmount = 0;
+        
+        issuer = _issuer;
+        auctionManager = _auctionManager;
+    }
+    
+    function setAllocation(uint _purchasedAmount, uint _maturityAmount, address _owner) public auctionManagerOnly {
+        Allocation memory allocation = Allocation({
+            purchasedAmount: _purchasedAmount,
+            maturityAmount: _maturityAmount,
+            withdrawnAtMaturity: false
+        });
+        
+        allocations[_owner] = allocation;
+    }
+    
+    function setTotalPurchasedAmount(uint _totalPurchasedAmount) public auctionManagerOnly {
+        totalPurchasedAmount = _totalPurchasedAmount;
+    }
+    
+    function depositAtMaturity() public issuerOnly payable {
+        require(msg.value > 0);
+    }
+    
+    function withdrawAtMaturity() public afterMaturity returns(bool){
+        Allocation storage allocation = allocations[msg.sender];
+        require(this.balance >= allocation.maturityAmount);
+        allocation.withdrawnAtMaturity = true;
+        if (!msg.sender.send(allocation.maturityAmount)) {
+            // reset withdrawAtMaturity if send fails
+            allocation.withdrawnAtMaturity = false;
+            return false;
+        }
+        
         return true;
     }
 }
