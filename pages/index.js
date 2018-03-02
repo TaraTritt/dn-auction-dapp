@@ -39,8 +39,12 @@ class AuctionIndex extends Component {
   renderAuctions() {
     const auctions = this.props.auctions.map(address => {
       let auction = this.props.auctionDetails[address];
-      var startTime = moment(auction.startTime).format("MM/DD/YYYY, h:mm:ss A");
-      var endTime = moment(auction.endTime).format("MM/DD/YYYY, h:mm:ss A");
+      var startTime = moment
+        .unix(auction.startTime)
+        .format("MM/DD/YYYY, h:mm:ss A");
+      var endTime = moment
+        .unix(auction.endTime)
+        .format("MM/DD/YYYY, h:mm:ss A");
 
       let auctionInfo = {};
 

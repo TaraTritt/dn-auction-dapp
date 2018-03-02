@@ -16,16 +16,30 @@ class AuctionShow extends Component {
       auctionManager: auctionSummary[2],
       stage: parseInt(auctionSummary[3])
     };
+    const start = moment.unix(auctionDetail.startTime);
+    const end = moment.unix(auctionDetail.endTime);
+    console.log(start);
+    console.log(end);
     return { auctionDetail };
   }
 
   renderCards() {
-    const { startTime, endTime, auctionManager, stage } = this.props;
+    const {
+      startTime,
+      endTime,
+      auctionManager,
+      stage
+    } = this.props.auctionDetail;
     var now = moment(new Date()); //todays date
-    const start = moment(startTime);
-    const end = moment(endTime);
-    var hoursLeftUntilAuctionOpens = moment.duration(start.diff(now)).asHours();
-    var hoursLeftUntilAuctionEnds = moment.duration(end.diff(start)).asHours();
+
+    const start = moment.unix(startTime);
+    const end = moment.unix(endTime);
+    var hoursLeftUntilAuctionOpens = Math.round(
+      moment.duration(start.diff(now)).asHours()
+    );
+    var hoursLeftUntilAuctionEnds = Math.round(
+      moment.duration(end.diff(start)).asHours()
+    );
 
     let hoursLeft = 0;
     let hoursLeftMessage = "This Auction is over";
@@ -39,7 +53,7 @@ class AuctionShow extends Component {
 
     let items = [
       {
-        header: hoursLeft,
+        header: hoursLeft + " hours",
         meta: "Countdown",
         description: hoursLeftMessage
       },
