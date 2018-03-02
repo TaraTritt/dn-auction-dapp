@@ -7,14 +7,21 @@ contract DNAuctionFactory {
     // Any public variables will have a getter function automatically created - called deployedAuctions
     // However the getter functions for arrays only allow returning the address at a single index i.e. deployedAuctions[1]
     address[] public deployedAuctions;
-    
+    address public factoryManager;
+
     function createAuction(uint _startTime, uint _endTime, address[] _approvedBidders) public {
         address newAuction = new DNAuction(_startTime, _endTime, _approvedBidders, msg.sender);
         deployedAuctions.push(newAuction);
+        factoryManager = msg.sender; // only original account that creates this factory is the manager
     }
     
     function getDeployedAuctions() public view returns(address[]) {
         return deployedAuctions;
+    }
+
+    function changeFactoryManager(address newFactoryManager) public {
+        require(msg.sender == factoryManager);
+        factoryManager = newFactoryManager;
     }
     
 }
@@ -96,6 +103,17 @@ contract DNAuction {
         }
         auctionManager = _auctionManager;
     }
+
+    function getAuctionSummary() public view returns(uint, uint, address, uint) {
+        return (
+            startTime,
+            endTime, 
+            auctionManager,
+            uint(stage)
+        );
+    }
+
+    function updateStage() public timedTransitions { }
 
     function addDiscountNote(uint _maturityDate, uint _totalAmount, address _issuer) public timedTransitions atStage(Stages.AuctionNotOpenYet) managerOnly {
         address discountNote = new DiscountNote(_maturityDate, _totalAmount, _issuer, msg.sender);

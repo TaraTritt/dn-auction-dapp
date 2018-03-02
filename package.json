@@ -2,17 +2,18 @@
   "name": "dn-auction-dapp",
   "version": "1.0.0",
   "main": "server.js",
-  "description": "DApp (decentralized application) for Discount Notes Auction",
+  "description": "DApp for Discount Notes Auction",
   "repository": "https://github.com/TaraTritt/dn-auction-dapp.git",
   "author": "TaraTritt <tmt7rc@virginia.edu>",
   "license": "MIT",
   "scripts": {
-    "dev": "next dev"
+    "start": "next dev"
   },
   "dependencies": {
     "css-loader": "^0.28.10",
     "file-loader": "^1.1.10",
     "fs-extra": "^5.0.0",
+    "moment": "^2.20.1",
     "next": "^5.0.0",
     "node-sass": "^4.7.2",
     "react": "^16.2.0",
