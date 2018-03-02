@@ -6,6 +6,7 @@ import web3 from "../ethereum/web3";
 import Layout from "../components/Layout";
 import auctionFactory from "../ethereum/auction-factory.contract";
 import Auction from "../ethereum/auction.contract";
+import { Link } from "../routes";
 
 class AuctionIndex extends Component {
   state = {
@@ -86,7 +87,11 @@ class AuctionIndex extends Component {
 
       return {
         header: address,
-        description: <a>View Auction</a>,
+        description: (
+          <Link route={`/auctions/${address}`}>
+            <a>View Auction</a>
+          </Link>
+        ),
         fluid: true,
         extra: extra
       };
