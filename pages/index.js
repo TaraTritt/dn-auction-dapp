@@ -10,12 +10,17 @@ import { Link } from "../routes";
 
 class AuctionIndex extends Component {
   state = {
-    userAccount: ""
+    userAccount: "",
+    userIsFactoryManager: false
   };
 
   async componentDidMount() {
     const userAccounts = await web3.eth.getAccounts();
-    this.setState({ userAccount: userAccounts[0] });
+    const isFactoryManager = userAccounts[0] === this.props.factoryManager;
+    this.setState({
+      userAccount: userAccounts[0],
+      userIsFactoryManager: isFactoryManager
+    });
   }
 
   static async getInitialProps() {
@@ -110,12 +115,14 @@ class AuctionIndex extends Component {
         <h2>Open Auctions</h2>
         {this.renderAuctions()}
 
-        {this.props.factoryManager === this.state.userAccount && (
-          <Button
-            content="Configure New Auction"
-            primary
-            style={{ marginTop: "10px" }}
-          />
+        {this.state.userIsFactoryManager && (
+          <Link route="/auctions/new">
+            <a>
+              <Button primary style={{ marginTop: "10px" }}>
+                Configure New Auction
+              </Button>
+            </a>
+          </Link>
         )}
       </Layout>
     );

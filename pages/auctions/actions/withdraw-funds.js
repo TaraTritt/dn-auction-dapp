@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Form } from "semantic-ui-react";
 
-import web3 from "../../ethereum/web3";
-import Layout from "../../components/Layout";
+import web3 from "../../../ethereum/web3";
+import Layout from "../../../components/Layout";
 
 class AuctionWithdrawFunds extends Component {
   render() {
