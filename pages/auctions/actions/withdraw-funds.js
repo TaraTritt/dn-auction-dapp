@@ -24,7 +24,9 @@ class AuctionWithdrawFunds extends Component {
       const accounts = await web3.eth.getAccounts();
       const auction = Auction(this.props.auctionAddress);
 
-      await auction.methods.allocateBids().send({ from: accounts[0] });
+      await auction.methods
+        .withdrawUnAllocatedAmount()
+        .send({ from: accounts[0] });
 
       // reset state
       this.setState({
