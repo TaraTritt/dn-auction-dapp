@@ -3,9 +3,9 @@ import { Card, Button, Icon, Grid } from "semantic-ui-react";
 import moment from "moment";
 
 import web3 from "../ethereum/web3";
-import Layout from "../components/Layout";
 import auctionFactory from "../ethereum/auction-factory.contract";
 import Auction from "../ethereum/auction.contract";
+import Layout from "../components/Layout";
 import { Link } from "../routes";
 
 class AuctionIndex extends Component {
@@ -118,7 +118,7 @@ class AuctionIndex extends Component {
         {this.state.userIsFactoryManager && (
           <Link route="/auctions/new">
             <a>
-              <Button primary style={{ marginTop: "10px" }}>
+              <Button primary style={{ marginTop: "13px" }}>
                 Configure New Auction
               </Button>
             </a>
