@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { Form, Input, Message, Button } from "semantic-ui-react";
 import moment from "moment";
 
-import web3 from "../../ethereum/web3";
-import auctionFactory from "../../ethereum/auction-factory.contract";
-import Layout from "../../components/Layout";
+import web3 from "ethereum/web3";
+import auctionFactory from "ethereum/auction-factory.contract";
+import Layout from "components/Layout";
 
 class AuctionNew extends Component {
   state = {

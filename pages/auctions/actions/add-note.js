@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { Form, Input, Message, Button, Grid } from "semantic-ui-react";
+import moment from "moment";
 
-import web3 from "../../../ethereum/web3";
-import Auction from "../../../ethereum/auction.contract";
+import web3 from "ethereum/web3";
+import Auction from "ethereum/auction.contract";
 import Layout from "components/Layout";
 import AuctionActionHeader from "components/auctions/actions/AuctionActionHeader";
 

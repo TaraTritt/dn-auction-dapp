@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import { Card, Button, Divider, Table, Grid } from "semantic-ui-react";
 import moment from "moment";
 
-import web3 from "../../ethereum/web3";
-import Layout from "../../components/Layout";
-import { Link } from "../../routes";
-import Auction from "../../ethereum/auction.contract";
-import DiscountNote from "../../ethereum/discount-note.contract";
+import web3 from "ethereum/web3";
+import Auction from "ethereum/auction.contract";
+import DiscountNote from "ethereum/discount-note.contract";
+import Layout from "components/Layout";
+import { Link } from "routes";
 
 class AuctionShow extends Component {
   state = {
