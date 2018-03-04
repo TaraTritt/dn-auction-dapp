@@ -21,7 +21,7 @@ class AuctionAddNote extends Component {
     return { auctionAddress: props.query.address };
   }
 
-  handleOnSubmit = async event => {
+  addDiscountNote = async event => {
     event.preventDefault();
 
     this.setState({ loading: true, errorMessage: "", successMessage: "" });
@@ -66,7 +66,7 @@ class AuctionAddNote extends Component {
           title="Add Discount Note"
         />
         <Form
-          onSubmit={this.handleOnSubmit}
+          onSubmit={this.addDiscountNote}
           error={!!this.state.errorMessage}
           success={!!this.state.successMessage}
         >

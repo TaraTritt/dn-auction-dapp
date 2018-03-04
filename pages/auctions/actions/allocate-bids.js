@@ -28,9 +28,9 @@ class AuctionAllocateBids extends Component {
       // reset state
       this.setState({
         successMessage:
-          "A new Discount Note has been created to the auction at address: " +
+          "All bids have been allocated for the auction at address: " +
           this.props.auctionAddress +
-          ". Go back to the Auction Details page to view it."
+          "."
       });
     } catch (err) {
       this.setState({ errorMessage: err.message });
