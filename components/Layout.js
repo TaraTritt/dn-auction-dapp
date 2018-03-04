@@ -7,7 +7,7 @@ import Header from "./Header";
 
 export default props => {
   return (
-    <Container>
+    <div style={{ maxWidth: "75%", margin: "auto" }}>
       <Head>
         <title>DN Auction DApp</title>
         <link
@@ -19,6 +19,6 @@ export default props => {
       </Head>
       <Header />
       {props.children}
-    </Container>
+    </div>
   );
 };
