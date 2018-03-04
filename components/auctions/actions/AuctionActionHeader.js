@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Grid, Button } from "semantic-ui-react";
 
-import { Link } from "../../../routes";
+import { Link } from "routes";
 
-const AuctionActionHeader = props => {
+export default props => {
   return (
     <div>
       <Grid columns={2}>
@@ -26,5 +26,3 @@ const AuctionActionHeader = props => {
     </div>
   );
 };
-
-export default AuctionActionHeader;
