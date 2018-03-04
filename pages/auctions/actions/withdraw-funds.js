@@ -1,14 +1,46 @@
 import React, { Component } from "react";
-import { Form } from "semantic-ui-react";
+import { Form, Button, Message } from "semantic-ui-react";
 
 import web3 from "ethereum/web3";
+import Auction from "ethereum/auction.contract";
 import Layout from "components/Layout";
 import AuctionActionHeader from "components/auctions/actions/AuctionActionHeader";
 
 class AuctionWithdrawFunds extends Component {
+  state = {
+    errorMessage: "",
+    successMessage: "",
+    loading: false
+  };
+
   static getInitialProps(props) {
     return { auctionAddress: props.query.address };
   }
+
+  withdrawUnallocateFunds = async event => {
+    this.setState({ loading: true, errorMessage: "", successMessage: "" });
+
+    try {
+      const accounts = await web3.eth.getAccounts();
+      const auction = Auction(this.props.auctionAddress);
+
+      await auction.methods.allocateBids().send({ from: accounts[0] });
+
+      // reset state
+      this.setState({
+        successMessage:
+          "All unallocated bids have been refunded back to your account at address: " +
+          accounts[0] +
+          " for the auction at address: " +
+          this.props.auctionAddress +
+          "."
+      });
+    } catch (err) {
+      this.setState({ errorMessage: err.message });
+    }
+
+    this.setState({ loading: false });
+  };
 
   render() {
     return (
@@ -17,6 +49,26 @@ class AuctionWithdrawFunds extends Component {
           auctionAddress={this.props.auctionAddress}
           title="Withdraw Unallocated Funds"
         />
+        <Form
+          onSubmit={this.withdrawUnallocateFunds}
+          error={!!this.state.errorMessage}
+          success={!!this.state.successMessage}
+        >
+          <Message error header="Error" content={this.state.errorMessage} />
+          <Message
+            success
+            header="Success"
+            content={this.state.successMessage}
+          />
+          <Button
+            type="submit"
+            loading={this.state.loading}
+            primary
+            style={{ marginTop: "13px" }}
+          >
+            Allocate Bids
+          </Button>
+        </Form>
       </Layout>
     );
   }

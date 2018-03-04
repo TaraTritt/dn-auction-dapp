@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Form, Button, Message, Input } from "semantic-ui-react";
 
 import web3 from "ethereum/web3";
+import Auction from "ethereum/auction.contract";
 import Layout from "components/Layout";
 import AuctionActionHeader from "components/auctions/actions/AuctionActionHeader";
 
