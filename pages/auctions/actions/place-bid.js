@@ -5,7 +5,7 @@ import web3 from "../../../ethereum/web3";
 import Layout from "components/Layout";
 import AuctionActionHeader from "components/auctions/actions/AuctionActionHeader";
 
-class AuctionWithdrawFunds extends Component {
+class AuctionPlaceBid extends Component {
   static getInitialProps(props) {
     return { auctionAddress: props.query.address };
   }
@@ -15,11 +15,11 @@ class AuctionWithdrawFunds extends Component {
       <Layout>
         <AuctionActionHeader
           auctionAddress={this.props.auctionAddress}
-          title="Withdraw Unallocated Funds"
+          title="Place Bid"
         />
       </Layout>
     );
   }
 }
 
-export default AuctionWithdrawFunds;
+export default AuctionPlaceBid;

@@ -25,7 +25,7 @@ class AuctionNew extends Component {
       approvedBiddersInputs.push(
         <Form.Field key={i}>
           <Input
-            label="Approved Bidder"
+            label="Approved Bidder Address"
             type="text"
             action={{
               content: "Remove Bidder",
@@ -66,7 +66,7 @@ class AuctionNew extends Component {
     });
   };
 
-  onSubmit = async event => {
+  handleOnSubmit = async event => {
     event.preventDefault();
 
     this.setState({ loading: true, errorMessage: "", successMessage: "" });
@@ -74,7 +74,7 @@ class AuctionNew extends Component {
     try {
       const accounts = await web3.eth.getAccounts();
 
-      const auction = await auctionFactory.methods
+      await auctionFactory.methods
         .createAuction(
           moment(
             this.state.startDate + " " + this.state.startTime,
@@ -120,7 +120,7 @@ class AuctionNew extends Component {
       <Layout>
         <h3>Configure New Auction</h3>
         <Form
-          onSubmit={this.onSubmit}
+          onSubmit={this.handleOnSubmit}
           error={!!this.state.errorMessage}
           success={!!this.state.successMessage}
         >

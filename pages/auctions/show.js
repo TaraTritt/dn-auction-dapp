@@ -18,10 +18,10 @@ class AuctionShow extends Component {
   async componentDidMount() {
     const userAccounts = await web3.eth.getAccounts();
     const account = userAccounts[0];
-    const auction = Auction(this.props.auctionDetail.address);
     // see if current user is the auction manager
     const isManager = account === this.props.auctionDetail.auctionManager;
     // see if current user is an approved bidder
+    const auction = Auction(this.props.auctionDetail.address);
     const isBidder = await auction.methods.approvedBidders(account).call();
 
     this.setState({
