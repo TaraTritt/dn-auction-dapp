@@ -150,14 +150,14 @@ class AuctionShow extends Component {
 
   renderButtons() {
     const button = null;
+    const route = `/auctions/${this.props.auctionDetail.address}/`;
     if (
       this.props.auctionDetail.stage === 0 &&
       this.state.userIsAuctionManager
     ) {
       // auction is not open yet
-      const route = `/auctions/${this.props.auctionDetail.address}/add-note`;
       return (
-        <Link route={route}>
+        <Link route={route + "add-note"}>
           <a>
             <Button primary floated="right">
               Add Discount Note
@@ -171,9 +171,13 @@ class AuctionShow extends Component {
       this.state.userIsApprovedBidder
     ) {
       return (
-        <Button primary floated="right">
-          Place Bid
-        </Button>
+        <Link route={route + "place-bid"}>
+          <a>
+            <Button primary floated="right">
+              Place Bid
+            </Button>
+          </a>
+        </Link>
       );
       // auction is closed
     } else if (
@@ -181,9 +185,13 @@ class AuctionShow extends Component {
       this.state.userIsAuctionManager
     ) {
       return (
-        <Button primary floated="right">
-          Allocate Bids
-        </Button>
+        <Link route={route + "allocate-bids"}>
+          <a>
+            <Button primary floated="right">
+              Allocate Bids
+            </Button>
+          </a>
+        </Link>
       );
       // bids have been allocated
     } else if (
@@ -191,9 +199,13 @@ class AuctionShow extends Component {
       this.state.userIsApprovedBidder
     ) {
       return (
-        <Button primary floated="right">
-          Withdraw Unallocated Funds
-        </Button>
+        <Link route={route + "withdraw-funds"}>
+          <a>
+            <Button primary floated="right">
+              Withdraw Unallocated Funds
+            </Button>
+          </a>
+        </Link>
       );
     }
 
