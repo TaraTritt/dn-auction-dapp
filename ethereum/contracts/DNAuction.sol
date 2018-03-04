@@ -104,12 +104,13 @@ contract DNAuction {
         auctionManager = _auctionManager;
     }
 
-    function getAuctionSummary() public view returns(uint, uint, address, uint) {
+    function getAuctionSummary() public view returns(uint, uint, address, uint, address[]) {
         return (
             startTime,
             endTime, 
             auctionManager,
-            uint(stage)
+            uint(stage),
+            availableNotes
         );
     }
 
@@ -120,7 +121,7 @@ contract DNAuction {
         availableNotes.push(discountNote);
     }
     
-    function getAvailableNotes() public view returns(address[]){
+    function getAvailableNotes() public view returns(address[]) {
         return availableNotes;
     }
     
@@ -146,17 +147,17 @@ contract DNAuction {
         bool found = false;
         // Define a variable to store an index for insert
         uint indexToInsert = 0;
-        for (uint i = 0; i < bidsForNote.length; i++){
-             if ( !found && bid.discountRate < bidsForNote[i].discountRate){
+        for (uint i = 0; i < bidsForNote.length; i++) {
+             if ( !found && bid.discountRate < bidsForNote[i].discountRate) {
                  found = true;
                  indexToInsert = i;
                  bidsUpdated[indexToInsert] = bid;
                  i--;
              } else {
                  // if adding bid to end of array then push to array
-                 if(found && i+1 == bidsUpdated.length) {
+                 if (found && i+1 == bidsUpdated.length) {
                      bidsUpdated.push(bidsForNote[i]);
-                 } else if(found) {
+                 } else if (found) {
                      bidsUpdated[i+1] = bidsForNote[i]; 
                  } else {
                      bidsUpdated[i] = bidsForNote[i];
@@ -166,7 +167,7 @@ contract DNAuction {
         }
         
         // no bids in array, so push bid to end of array
-        if(!found) {
+        if (!found) {
             indexToInsert = bidsForNote.length;
             bidsUpdated.push(bid);
         }
@@ -175,12 +176,12 @@ contract DNAuction {
     
     function allocateBids() public managerOnly timedTransitions atStage(Stages.AuctionClosed) returns(bool) {
         // allocate bids
-        for(uint i = 0; i < availableNotes.length; i++) {
+        for (uint i = 0; i < availableNotes.length; i++) {
             Bid[] storage bidsForNote = bids[availableNotes[i]];
             DiscountNote note = DiscountNote(availableNotes[i]);
             uint amountRemaining = note.availableAmount();
             uint amountToSendToIssuer = 0;
-            for(uint j = 0; j < bidsForNote.length; j++) {
+            for (uint j = 0; j < bidsForNote.length; j++) {
                 Bid storage tmpBid = bidsForNote[j];
                 // bid amount is <= to the amount remaining in the selected note, so the full bid can be allocated
                 if (tmpBid.amount <= amountRemaining) {
@@ -231,12 +232,12 @@ contract DNAuction {
     function withdrawUnAllocatedAmount() atStage(Stages.BidsAllocated) onlyApprovedBidders public returns (bool) {
         uint amountToRefund = 0;
         Bid[] storage bidsBySender;
-        for(uint i = 0; i < availableNotes.length; i++) {
+        for (uint i = 0; i < availableNotes.length; i++) {
             address noteAddress = availableNotes[i];
             Bid[] storage bidsForNote = bids[noteAddress];
-            for(uint j = 0; j < bidsForNote.length; j++) {
+            for (uint j = 0; j < bidsForNote.length; j++) {
                 Bid storage tmpBid = bidsForNote[j];
-                if(tmpBid.bidder == msg.sender) {
+                if (tmpBid.bidder == msg.sender) {
                     bidsBySender.push(tmpBid);
                     amountToRefund += tmpBid.amount - tmpBid.allocatedAmount;
                 }
@@ -247,13 +248,13 @@ contract DNAuction {
             // It is important to set unallocatedAmountToRefund to 0 first because the recipient
             // can call this function again as part of the receiving call
             // before `send` returns.
-            for(uint m = 0; m < bidsBySender.length; m++){
+            for (uint m = 0; m < bidsBySender.length; m++) {
                 bidsBySender[m].refunded = true;
             }
 
             if (!msg.sender.send(amountToRefund)) {
                 // No need to call throw here, just reset the amount that need to still refund
-                for(uint n = 0; n < bidsBySender.length; n++){
+                for (uint n = 0; n < bidsBySender.length; n++) {
                     bidsBySender[n].refunded = false;
                 }
                 return false;
@@ -275,6 +276,7 @@ contract DiscountNote {
     }
     
     mapping(address => Allocation) public allocations;
+    address[] public owners;
     
     address public issuer;
     address public auctionManager;
@@ -302,6 +304,15 @@ contract DiscountNote {
         issuer = _issuer;
         auctionManager = _auctionManager;
     }
+
+    function getDiscountNoteSummary() public view returns(uint, uint, uint, address) {
+        return (
+            availableAmount,
+            totalPurchasedAmount, 
+            maturityDate,
+            issuer
+        );
+    }
     
     function setAllocation(uint _purchasedAmount, uint _maturityAmount, address _owner) public auctionManagerOnly {
         Allocation memory allocation = Allocation({
@@ -311,6 +322,7 @@ contract DiscountNote {
         });
         
         allocations[_owner] = allocation;
+        owners.push(_owner);
     }
     
     function setTotalPurchasedAmount(uint _totalPurchasedAmount) public auctionManagerOnly {
@@ -321,7 +333,7 @@ contract DiscountNote {
         require(msg.value > 0);
     }
     
-    function withdrawAtMaturity() public afterMaturity returns(bool){
+    function withdrawAtMaturity() public afterMaturity returns(bool) {
         Allocation storage allocation = allocations[msg.sender];
         require(this.balance >= allocation.maturityAmount);
         allocation.withdrawnAtMaturity = true;

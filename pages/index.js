@@ -107,7 +107,7 @@ class AuctionIndex extends Component {
   render() {
     return (
       <Layout>
-        <h3>Open Auctions</h3>
+        <h2>Open Auctions</h2>
         {this.renderAuctions()}
 
         {this.props.factoryManager === this.state.userAccount && (
