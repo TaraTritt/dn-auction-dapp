@@ -43,7 +43,7 @@ npm install --global --production windows-build-tools
 npm install
 ```
 
-2.  Modify ethereum/web3.js to use your Infura Rinkeby Provider URL, which we is the default provider for web3.js if the user does not have MetaMask installed
+2.  Modify ethereum/web3.js to use your Infura Rinkeby Provider URL, which will be the default provider for web3.js if the user does not have MetaMask installed, otherwise it will use the MetaMask injected provider
 
 ```javascript
 const provider = new Web3.providers.HttpProvider(
