@@ -13,7 +13,7 @@ node -v
 Install to your browser:
 
 * [Metamask](https://chrome.google.com/webstore/search/metamask)
-  * After installing, create an account and save the mnemonic phrase for later
+  * After installing, create an account 
   * Make sure you select the Rinkeby Test Network from the top left corner of the extension - by default the Main Ethereum Network will be selected
 
 Navigate to and follow the directions below for the following:
@@ -21,7 +21,7 @@ Navigate to and follow the directions below for the following:
 * [Rinkeby Ethereum Faucet](https://faucet.rinkeby.io/)
   * Copy your address from MetaMask by opening up the extension and clicking the ... and then selecting the option "Copy Address to clipboard"
   * Follow the instructions on the Faucet webpage to get your Ether and choose the 18.75 ethers option
-  * This faucet will give you Ether for free on the Rinkeby Test Network. This will come in handy later when deploying and interacting with your contracts
+  * This faucet will give you Ether for free on the Rinkeby Test Network. This will come in handy later when you are interacting with the DApp
 
 - [Infura](https://infura.io/)
   * Sign up for Infura at https://infura.io/, you should recieve an email will all the public ethereum networks - save the Rinkeby Test Provider URL for later
