@@ -12,8 +12,8 @@ const compiledContract = require("./build/DNAuctionFactory.json"); // get compil
         Steps: sign up for Infura at https://infura.io/, you should recieve an email will all the public ethereum networks - save the Rinkeby URL
 */
 const provider = new HDWalletProvider(
-  "matter virtual list game install tornado genius amused capital kick energy broken", //mnemonic generates many accounts
-  "https://rinkeby.infura.io/HflqAGsVLFBf2cFBMYoq" //provider url with access key
+  "<MetaMask Mnemonic phrase>", //mnemonic generates many accounts
+  "<Infura Provider URL with Access Key>" //provider url with access key
 );
 const web3 = new Web3(provider);
 
