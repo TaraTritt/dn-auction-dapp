@@ -1,4 +1,7 @@
 # dn-auction-dapp
+This repo is built on top of the [dapp-starter repo]https://github.com/TaraTritt/dapp-starter. It shows you how you can extend that repo to create a more complex Ethereum DApp.
+
+The purpose of this DApp is to auction off [Discount Notes](https://www.investopedia.com/terms/d/discountnote.asp)
 
 ## Prerequisites
 
@@ -56,3 +59,5 @@ const provider = new Web3.providers.HttpProvider(
 ```shell
 npm start
 ```
+
+
