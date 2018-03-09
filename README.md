@@ -32,8 +32,6 @@ Navigate to and follow the directions below for the following:
 
 ## Getting Started
 
-### Install Dependencies
-
 **If you are on a Windows computer, please execute this command as an [administrator](https://www.howtogeek.com/194041/how-to-open-the-command-prompt-as-administrator-in-windows-8.1/) below first:**
 
 ```shell
