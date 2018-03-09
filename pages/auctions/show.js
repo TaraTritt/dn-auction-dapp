@@ -70,7 +70,7 @@ class AuctionShow extends Component {
           <Table.Cell>{noteAddress}</Table.Cell>
           <Table.Cell>{noteDetail.availableAmount} Ether</Table.Cell>
           <Table.Cell>{noteDetail.totalPurchasedAmount} Ether</Table.Cell>
-          <Table.Cell singleLine>
+          <Table.Cell>
             {moment
               .unix(noteDetail.maturityDate)
               .format("MM/DD/YYYY, h:mm:ss A")}
@@ -84,11 +84,11 @@ class AuctionShow extends Component {
       <Table celled padded>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell singleLine>Address</Table.HeaderCell>
+            <Table.HeaderCell>Address</Table.HeaderCell>
             <Table.HeaderCell>Available Amount</Table.HeaderCell>
-            <Table.HeaderCell>Total Purchased Amount</Table.HeaderCell>
+            <Table.HeaderCell>Purchased Amount</Table.HeaderCell>
             <Table.HeaderCell>Maturity Date</Table.HeaderCell>
-            <Table.HeaderCell singleLine>Issuer Address</Table.HeaderCell>
+            <Table.HeaderCell>Issuer Address</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 
