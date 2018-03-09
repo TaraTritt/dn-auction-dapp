@@ -1,5 +1,5 @@
 // solidity version
-pragma solidity ^0.4.18;
+pragma solidity ^0.4.20;
 
 // 'contract' has similarities to 'class' in other languages
 contract DNAuctionFactory {
@@ -9,10 +9,13 @@ contract DNAuctionFactory {
     address[] public deployedAuctions;
     address public factoryManager;
 
+    function DNAuctionFactory() public {
+        factoryManager = msg.sender; // only original account that creates this factory is the manager
+    }
+
     function createAuction(uint _startTime, uint _endTime, address[] _approvedBidders) public {
         address newAuction = new DNAuction(_startTime, _endTime, _approvedBidders, msg.sender);
         deployedAuctions.push(newAuction);
-        factoryManager = msg.sender; // only original account that creates this factory is the manager
     }
     
     function getDeployedAuctions() public view returns(address[]) {
