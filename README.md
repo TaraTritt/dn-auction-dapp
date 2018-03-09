@@ -44,7 +44,7 @@ npm install --global --production windows-build-tools
 npm install
 ```
 
-2.  If you want to view all the functionality, including the Auction Factory Manager functionality, you also need to deploy another instance of the Auction Factory contract, else skip to step 7.
+2.  If you want to view all the functionality, including the Auction Factory Manager functionality, you also need to deploy another instance of the Auction Factory contract, else skip to step 6.
 
 3.  Modify [ethereum/deploy.js](https://github.com/TaraTritt/dn-auction-dapp/blob/master/ethereum/deploy.js) to use the accounts you generated with MetaMask & use the Infura provider you registered
 
@@ -64,15 +64,7 @@ const provider = new HDWalletProvider(
 node deploy.js
 ```
 
-5. Modify [ethereum/auction-factory.contract.js](https://github.com/TaraTritt/dn-auction-dapp/blob/master/ethereum/auction-factory.contract.js) to interact with Auction Factory contract instance you just deployed
-
-* Replace `<Your Contract>` with the contract `DNAuctionFactory.json` file, like so:
-
-```javascript
-import Contract from "./build/DNAuctionFactory.json";
-```
-
-6. Again modify [ethereum/auction-factory.contract.js](https://github.com/TaraTritt/dn-auction-dapp/blob/master/ethereum/auction-factory.contract.js) to get your deployed contract instance via the address that was logged to the console
+5. Again modify [ethereum/auction-factory.contract.js](https://github.com/TaraTritt/dn-auction-dapp/blob/master/ethereum/auction-factory.contract.js) to get your deployed contract instance via the address that was logged to the console
 
 * Replace the current address `0x7EbaC0da20592d950932b3b5BB0A1F6d99C2bCe2` with the saved address from the previous deployment step
 
@@ -83,7 +75,7 @@ const instance = new web3.eth.Contract(
 );
 ```
 
-7.  Modify ethereum/web3.js to use your Infura Rinkeby Provider URL, which will be the default provider for web3.js if the user does not have MetaMask installed, otherwise it will use the MetaMask injected provider
+6.  Modify ethereum/web3.js to use your Infura Rinkeby Provider URL, which will be the default provider for web3.js if the user does not have MetaMask installed, otherwise it will use the MetaMask injected provider
 
 ```javascript
 const provider = new Web3.providers.HttpProvider(
@@ -91,7 +83,7 @@ const provider = new Web3.providers.HttpProvider(
 );
 ```
 
-8.  Run your app locally on port 3000. **Make sure to execute this command from the root directory of your project**
+7.  Run your app locally on port 3000. **Make sure to execute this command from the root directory of your project**
 
 ```shell
 npm start
