@@ -44,18 +44,46 @@ npm install --global --production windows-build-tools
 npm install
 ```
 
-2. If you want to view all the functionality, including the Auction Factory Manager functionality, you also need to deploy another instance of the Auction Factory contract, else skip to step 4.
+2.  If you want to view all the functionality, including the Auction Factory Manager functionality, you also need to deploy another instance of the Auction Factory contract, else skip to step 7.
 
-3. Compile the contracts by executing ethereum/compile.js. **Make sure to execute this command inside the ethereum directory**
+3.  Modify [ethereum/deploy.js](https://github.com/TaraTritt/dn-auction-dapp/blob/master/ethereum/deploy.js) to use the accounts you generated with MetaMask & use the Infura provider you registered
 
-```shell
-node compile.js
+* Replace the `<MetaMask Mnemonic phrase>` with the MetaMask mnemonic phrase that you saved earlier
+* Replace the `<Infura Provider URL with Access Key>` with the Rinkeby Test Provider URL that you saved earlier
+
+```javascript
+const provider = new HDWalletProvider(
+  "<MetaMask Mnemonic phrase>", 
+  "<Infura Provider URL with Access Key>"
+);
 ```
 
-* This will generate .json files for each contract in DNAuction.sol under the ethereum/build folder
+4.  Deploy the contract to the Rinkeby Network. **Make sure to execute this command inside the ethereum directory.** This may take a few minutes to finish executing. Make sure to save the contract address generated.
 
+```shell
+node deploy.js
+```
 
-4.  Modify ethereum/web3.js to use your Infura Rinkeby Provider URL, which will be the default provider for web3.js if the user does not have MetaMask installed, otherwise it will use the MetaMask injected provider
+5. Modify [ethereum/auction-factory.contract.js](https://github.com/TaraTritt/dn-auction-dapp/blob/master/ethereum/auction-factory.contract.js) to interact with Auction Factory contract instance you just deployed
+
+* Replace `<Your Contract>` with the contract `DNAuctionFactory.json` file, like so:
+
+```javascript
+import Contract from "./build/DNAuctionFactory.json";
+```
+
+6. Again modify [ethereum/auction-factory.contract.js](https://github.com/TaraTritt/dn-auction-dapp/blob/master/ethereum/auction-factory.contract.js) to get your deployed contract instance via the address that was logged to the console
+
+* Replace the `<Address of Contract>` with the saved address from the previous deployment step
+
+```javascript
+const instance = new web3.eth.Contract(
+  JSON.parse(Contract.interface),
+  "<Address of Contract>"
+);
+```
+
+7.  Modify ethereum/web3.js to use your Infura Rinkeby Provider URL, which will be the default provider for web3.js if the user does not have MetaMask installed, otherwise it will use the MetaMask injected provider
 
 ```javascript
 const provider = new Web3.providers.HttpProvider(
@@ -63,7 +91,7 @@ const provider = new Web3.providers.HttpProvider(
 );
 ```
 
-5. Run your app locally on port 3000. **Make sure to execute this command from the root directory of your project**
+8.  Run your app locally on port 3000. **Make sure to execute this command from the root directory of your project**
 
 ```shell
 npm start
