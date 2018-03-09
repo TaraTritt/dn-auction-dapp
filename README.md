@@ -58,7 +58,7 @@ const provider = new HDWalletProvider(
 );
 ```
 
-4.  Deploy the contract to the Rinkeby Network. **Make sure to execute this command inside the ethereum directory.** This may take a few minutes to finish executing. Make sure to save the contract address generated.
+4.  Deploy the contract to the Rinkeby Network. **Make sure to execute this command inside the ethereum directory.** This may take a few minutes to finish executing. Make sure to save the contract address generated. It will also be written to the ADDRESS file in the root directory
 
 ```shell
 node deploy.js
