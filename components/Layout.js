@@ -7,7 +7,7 @@ import Header from "./Header";
 
 export default props => {
   return (
-    <div style={{ maxWidth: "75%", margin: "auto" }}>
+    <div style={{ maxWidth: "78%", margin: "auto" }}>
       <Head>
         <title>DN Auction DApp</title>
         <link
