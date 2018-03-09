@@ -74,12 +74,12 @@ import Contract from "./build/DNAuctionFactory.json";
 
 6. Again modify [ethereum/auction-factory.contract.js](https://github.com/TaraTritt/dn-auction-dapp/blob/master/ethereum/auction-factory.contract.js) to get your deployed contract instance via the address that was logged to the console
 
-* Replace the `<Address of Contract>` with the saved address from the previous deployment step
+* Replace the current address `0x7EbaC0da20592d950932b3b5BB0A1F6d99C2bCe2` with the saved address from the previous deployment step
 
 ```javascript
 const instance = new web3.eth.Contract(
-  JSON.parse(Contract.interface),
-  "<Address of Contract>"
+  JSON.parse(AuctionFactory.interface),
+  "0x7EbaC0da20592d950932b3b5BB0A1F6d99C2bCe2"
 );
 ```
 
