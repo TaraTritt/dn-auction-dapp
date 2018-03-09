@@ -46,7 +46,18 @@ npm install --global --production windows-build-tools
 npm install
 ```
 
-2.  Modify ethereum/web3.js to use your Infura Rinkeby Provider URL, which will be the default provider for web3.js if the user does not have MetaMask installed, otherwise it will use the MetaMask injected provider
+2. If you want to view all the functionality, including the Auction Factory Manager functionality, you also need to deploy another instance of the Auction Factory contract, else skip to [step 4]().
+
+3. Compile the contracts by executing ethereum/compile.js. **Make sure to execute this command inside the ethereum directory**
+
+```shell
+node compile.js
+```
+
+* This will generate .json files for each contract in DNAuction.sol under the ethereum/build folder
+
+
+4.  Modify ethereum/web3.js to use your Infura Rinkeby Provider URL, which will be the default provider for web3.js if the user does not have MetaMask installed, otherwise it will use the MetaMask injected provider
 
 ```javascript
 const provider = new Web3.providers.HttpProvider(
@@ -54,7 +65,7 @@ const provider = new Web3.providers.HttpProvider(
 );
 ```
 
-3. Run your app locally on port 3000. **Make sure to execute this command from the root directory of your project**
+5. Run your app locally on port 3000. **Make sure to execute this command from the root directory of your project**
 
 ```shell
 npm start
