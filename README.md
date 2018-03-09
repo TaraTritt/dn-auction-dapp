@@ -44,7 +44,7 @@ npm install --global --production windows-build-tools
 npm install
 ```
 
-2. If you want to view all the functionality, including the Auction Factory Manager functionality, you also need to deploy another instance of the Auction Factory contract, else skip to [step 4]().
+2. If you want to view all the functionality, including the Auction Factory Manager functionality, you also need to deploy another instance of the Auction Factory contract, else skip to step 4.
 
 3. Compile the contracts by executing ethereum/compile.js. **Make sure to execute this command inside the ethereum directory**
 
