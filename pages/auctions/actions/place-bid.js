@@ -8,6 +8,7 @@ import AuctionActionHeader from "components/auctions/actions/AuctionActionHeader
 
 class AuctionPlaceBid extends Component {
   state = {
+    bidAmount: 0,
     maturityAmount: 0,
     errorMessage: "",
     successMessage: "",
@@ -15,7 +16,7 @@ class AuctionPlaceBid extends Component {
   };
 
   static getInitialProps(props) {
-    return { auctionAddress: props.query.address };
+    return { auctionAddress: props.query.address, noteAddress: props.query.noteAddress };
   }
 
   placeBid = async event => {
@@ -26,8 +27,8 @@ class AuctionPlaceBid extends Component {
       const auction = Auction(this.props.auctionAddress);
 
       await auction.methods
-        .placeBid(this.state.maturityAmount, this.props.noteDetails.address)
-        .send({ from: accounts[0] });
+        .placeBid(this.state.maturityAmount, this.props.noteAddress)
+        .send({ value: web3.utils.toWei(this.state.bidAmount, "ether"), from: accounts[0] });
 
       // reset state
       this.setState({
@@ -47,39 +48,34 @@ class AuctionPlaceBid extends Component {
   render() {
     return (
       <Layout>
-        <AuctionActionHeader
-          auctionAddress={this.props.auctionAddress}
-          title="Place Bid"
-        />
+        <AuctionActionHeader auctionAddress={this.props.auctionAddress} title="Place Bid" />
         <Form
-          onSubmit={this.allocateBids}
+          onSubmit={this.placeBid}
           error={!!this.state.errorMessage}
           success={!!this.state.successMessage}
         >
+          <Form.Field required>
+            <Input
+              label="Bid Amount"
+              type="number"
+              icon="money"
+              value={this.state.bidAmount}
+              onChange={event => this.setState({ bidAmount: event.target.value })}
+            />
+          </Form.Field>
           <Form.Field required>
             <Input
               label="Maturity Amount"
               type="number"
               icon="money"
               value={this.state.maturityAmount}
-              onChange={event =>
-                this.setState({ maturityAmount: event.target.value })
-              }
+              onChange={event => this.setState({ maturityAmount: event.target.value })}
             />
           </Form.Field>
           <Message error header="Error" content={this.state.errorMessage} />
-          <Message
-            success
-            header="Success"
-            content={this.state.successMessage}
-          />
-          <Button
-            type="submit"
-            loading={this.state.loading}
-            primary
-            style={{ marginTop: "13px" }}
-          >
-            Allocate Bids
+          <Message success header="Success" content={this.state.successMessage} />
+          <Button type="submit" loading={this.state.loading} primary style={{ marginTop: "13px" }}>
+            Place Bids
           </Button>
         </Form>
       </Layout>
