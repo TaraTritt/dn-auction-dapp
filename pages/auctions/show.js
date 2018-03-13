@@ -82,14 +82,14 @@ class AuctionShow extends Component {
           <Table.Cell>{noteDetail.availableAmount} Ether</Table.Cell>
           <Table.Cell>{noteDetail.totalPurchasedAmount} Ether</Table.Cell>
           <Table.Cell>
-            {moment
-              .unix(noteDetail.maturityDate)
-              .format("MM/DD/YYYY, h:mm:ss A")}
+            {moment.unix(noteDetail.maturityDate).format("MM/DD/YYYY, h:mm:ss A")}
           </Table.Cell>
           <Table.Cell>{noteDetail.issuer}</Table.Cell>
           <Table.Cell>
             <Link
-              route={`/auctions/${this.props.auctionDetail.address}/place-bid`}
+              route={`/auctions/${this.props.auctionDetail.address}/notes/${
+                this.props.auctionDetail.address
+              }/place-bid`}
             >
               <a>
                 <Button primary floated="right">
@@ -121,23 +121,13 @@ class AuctionShow extends Component {
   }
 
   renderCards() {
-    const {
-      startTime,
-      endTime,
-      auctionManager,
-      stage,
-      availableNotes
-    } = this.props.auctionDetail;
+    const { startTime, endTime, auctionManager, stage, availableNotes } = this.props.auctionDetail;
 
     const now = moment(new Date()); //todays date
     const start = moment.unix(startTime);
     const end = moment.unix(endTime);
-    const hoursLeftUntilAuctionOpens = Math.round(
-      moment.duration(start.diff(now)).asHours()
-    );
-    const hoursLeftUntilAuctionEnds = Math.round(
-      moment.duration(end.diff(start)).asHours()
-    );
+    const hoursLeftUntilAuctionOpens = Math.round(moment.duration(start.diff(now)).asHours());
+    const hoursLeftUntilAuctionEnds = Math.round(moment.duration(end.diff(start)).asHours());
 
     let hoursLeft = 0;
     let hoursLeftMessage = "This Auction is over";
@@ -163,8 +153,7 @@ class AuctionShow extends Component {
       {
         header: end.format("MM/DD/YYYY, h:mm:ss A"),
         meta: "Auction End Time",
-        description:
-          "You may withdraw any unallocated bid amounts once the auction ends"
+        description: "You may withdraw any unallocated bid amounts once the auction ends"
       }
     ];
 
@@ -174,10 +163,7 @@ class AuctionShow extends Component {
   renderButtons() {
     const button = null;
     const route = `/auctions/${this.props.auctionDetail.address}/`;
-    if (
-      this.props.auctionDetail.stage === 0 &&
-      this.state.userIsAuctionManager
-    ) {
+    if (this.props.auctionDetail.stage === 0 && this.state.userIsAuctionManager) {
       // auction is not open yet
       return (
         <Link route={route + "add-note"}>
@@ -189,24 +175,10 @@ class AuctionShow extends Component {
         </Link>
       );
       // auction is open
-    } else if (
-      this.props.auctionDetail.stage === 1 &&
-      this.state.userIsApprovedBidder
-    ) {
-      return (
-        <Link route={route + "place-bid"}>
-          <a>
-            <Button primary floated="right">
-              Place Bid
-            </Button>
-          </a>
-        </Link>
-      );
+    } else if (this.props.auctionDetail.stage === 1 && this.state.userIsApprovedBidder) {
+      return;
       // auction is closed
-    } else if (
-      this.props.auctionDetail.stage === 2 &&
-      this.state.userIsAuctionManager
-    ) {
+    } else if (this.props.auctionDetail.stage === 2 && this.state.userIsAuctionManager) {
       return (
         <Link route={route + "allocate-bids"}>
           <a>
@@ -217,10 +189,7 @@ class AuctionShow extends Component {
         </Link>
       );
       // bids have been allocated
-    } else if (
-      this.props.auctionDetail.stage === 3 &&
-      this.state.userIsApprovedBidder
-    ) {
+    } else if (this.props.auctionDetail.stage === 3 && this.state.userIsApprovedBidder) {
       return (
         <Link route={route + "withdraw-funds"}>
           <a>
