@@ -3,8 +3,8 @@ import { Card, Button, Divider, Table, Grid } from "semantic-ui-react";
 import moment from "moment";
 
 import web3 from "ethereum/web3";
-import Auction from "ethereum/auction.contract";
-import DiscountNote from "ethereum/discount-note.contract";
+import Auction from "ethereum/contract-instances/auction.contract";
+import DiscountNote from "ethereum/contract-instances/discount-note.contract";
 import Layout from "components/Layout";
 import { Link } from "routes";
 

@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import { Card, Button, Icon, Grid } from "semantic-ui-react";
 import moment from "moment";
 
-import web3 from "../ethereum/web3";
-import auctionFactory from "../ethereum/auction-factory.contract";
-import Auction from "../ethereum/auction.contract";
-import Layout from "../components/Layout";
-import { Link } from "../routes";
+import web3 from "/ethereum/web3";
+import auctionFactory from "/ethereum/contract-instances/auction-factory.contract";
+import Auction from "/ethereum/contract-instances/auction.contract";
+import Layout from "/components/Layout";
+import { Link } from "/routes";
 
 class AuctionIndex extends Component {
   state = {
@@ -36,20 +36,16 @@ class AuctionIndex extends Component {
         stage: parseInt(auctionDetail[3])
       };
     }
-    const factoryManager = await auctionFactory.methods.factoryManager().call();
 
+    const factoryManager = await auctionFactory.methods.factoryManager().call();
     return { auctions, auctionDetails, factoryManager };
   }
 
   renderAuctions() {
     const auctions = this.props.auctions.map(address => {
       let auction = this.props.auctionDetails[address];
-      var startTime = moment
-        .unix(auction.startTime)
-        .format("MM/DD/YYYY, h:mm:ss A");
-      var endTime = moment
-        .unix(auction.endTime)
-        .format("MM/DD/YYYY, h:mm:ss A");
+      var startTime = moment.unix(auction.startTime).format("MM/DD/YYYY, h:mm:ss A");
+      var endTime = moment.unix(auction.endTime).format("MM/DD/YYYY, h:mm:ss A");
 
       let auctionInfo = {};
 

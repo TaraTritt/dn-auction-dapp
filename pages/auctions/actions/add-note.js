@@ -3,7 +3,7 @@ import { Form, Input, Message, Button, Grid } from "semantic-ui-react";
 import moment from "moment";
 
 import web3 from "ethereum/web3";
-import Auction from "ethereum/auction.contract";
+import Auction from "ethereum/contract-instances/auction.contract";
 import Layout from "components/Layout";
 import AuctionActionHeader from "components/auctions/actions/AuctionActionHeader";
 
@@ -61,10 +61,7 @@ class AuctionAddNote extends Component {
   render() {
     return (
       <Layout>
-        <AuctionActionHeader
-          auctionAddress={this.props.auctionAddress}
-          title="Add Discount Note"
-        />
+        <AuctionActionHeader auctionAddress={this.props.auctionAddress} title="Add Discount Note" />
         <Form
           onSubmit={this.addDiscountNote}
           error={!!this.state.errorMessage}
@@ -76,9 +73,7 @@ class AuctionAddNote extends Component {
               type="date"
               icon="calendar"
               value={this.state.maturityDate}
-              onChange={event =>
-                this.setState({ maturityDate: event.target.value })
-              }
+              onChange={event => this.setState({ maturityDate: event.target.value })}
             />
           </Form.Field>
           <Form.Field required>
@@ -87,9 +82,7 @@ class AuctionAddNote extends Component {
               type="number"
               icon="money"
               value={this.state.totalAmount}
-              onChange={event =>
-                this.setState({ totalAmount: event.target.value })
-              }
+              onChange={event => this.setState({ totalAmount: event.target.value })}
             />
           </Form.Field>
           <Form.Field required>
@@ -103,17 +96,8 @@ class AuctionAddNote extends Component {
           </Form.Field>
 
           <Message error header="Error" content={this.state.errorMessage} />
-          <Message
-            success
-            header="Success"
-            content={this.state.successMessage}
-          />
-          <Button
-            type="submit"
-            loading={this.state.loading}
-            primary
-            style={{ marginTop: "13px" }}
-          >
+          <Message success header="Success" content={this.state.successMessage} />
+          <Button type="submit" loading={this.state.loading} primary style={{ marginTop: "13px" }}>
             Add Discount Note
           </Button>
         </Form>

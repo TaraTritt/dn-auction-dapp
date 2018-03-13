@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Form, Button, Message } from "semantic-ui-react";
 
 import web3 from "ethereum/web3";
-import Auction from "ethereum/auction.contract";
+import Auction from "ethereum/contract-instances/auction.contract";
 import Layout from "components/Layout";
 import AuctionActionHeader from "components/auctions/actions/AuctionActionHeader";
 
@@ -24,9 +24,7 @@ class AuctionWithdrawFunds extends Component {
       const accounts = await web3.eth.getAccounts();
       const auction = Auction(this.props.auctionAddress);
 
-      await auction.methods
-        .withdrawUnAllocatedAmount()
-        .send({ from: accounts[0] });
+      await auction.methods.withdrawUnAllocatedAmount().send({ from: accounts[0] });
 
       // reset state
       this.setState({
@@ -57,18 +55,9 @@ class AuctionWithdrawFunds extends Component {
           success={!!this.state.successMessage}
         >
           <Message error header="Error" content={this.state.errorMessage} />
-          <Message
-            success
-            header="Success"
-            content={this.state.successMessage}
-          />
-          <Button
-            type="submit"
-            loading={this.state.loading}
-            primary
-            style={{ marginTop: "13px" }}
-          >
-            Allocate Bids
+          <Message success header="Success" content={this.state.successMessage} />
+          <Button type="submit" loading={this.state.loading} primary style={{ marginTop: "13px" }}>
+            Withdraw Unallocated Funds
           </Button>
         </Form>
       </Layout>

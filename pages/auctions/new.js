@@ -3,7 +3,7 @@ import { Form, Input, Message, Button } from "semantic-ui-react";
 import moment from "moment";
 
 import web3 from "ethereum/web3";
-import auctionFactory from "ethereum/auction-factory.contract";
+import auctionFactory from "ethereum/contract-instances/auction-factory.contract";
 import Layout from "components/Layout";
 
 class AuctionNew extends Component {
@@ -60,9 +60,7 @@ class AuctionNew extends Component {
   handleRemoveBidder = idx => event => {
     event.preventDefault();
     this.setState({
-      approvedBidders: this.state.approvedBidders.filter(
-        (s, sidx) => idx !== sidx
-      )
+      approvedBidders: this.state.approvedBidders.filter((s, sidx) => idx !== sidx)
     });
   };
 
@@ -76,14 +74,8 @@ class AuctionNew extends Component {
 
       await auctionFactory.methods
         .createAuction(
-          moment(
-            this.state.startDate + " " + this.state.startTime,
-            "YYYY-MM-DD HH:mm"
-          ).unix(),
-          moment(
-            this.state.endDate + " " + this.state.endTime,
-            "YYYY-MM-DD HH:mm"
-          ).unix(),
+          moment(this.state.startDate + " " + this.state.startTime, "YYYY-MM-DD HH:mm").unix(),
+          moment(this.state.endDate + " " + this.state.endTime, "YYYY-MM-DD HH:mm").unix(),
           this.state.approvedBidders
         )
         .send({
@@ -97,8 +89,7 @@ class AuctionNew extends Component {
         endDate: "",
         endTime: "17:00",
         approvedBidders: [""],
-        successMessage:
-          "A new Auction has been created. Go the homepage to view it"
+        successMessage: "A new Auction has been created. Go the homepage to view it"
       });
     } catch (err) {
       this.setState({ errorMessage: err.message });
@@ -130,9 +121,7 @@ class AuctionNew extends Component {
               type="date"
               icon="calendar"
               value={this.state.startDate}
-              onChange={event =>
-                this.setState({ startDate: event.target.value })
-              }
+              onChange={event => this.setState({ startDate: event.target.value })}
             />
           </Form.Field>
           <Form.Field required>
@@ -141,9 +130,7 @@ class AuctionNew extends Component {
               type="text"
               icon="time"
               value={this.state.startTime}
-              onChange={event =>
-                this.setState({ startTime: event.target.value })
-              }
+              onChange={event => this.setState({ startTime: event.target.value })}
             />
           </Form.Field>
           <Form.Field required>
@@ -168,17 +155,8 @@ class AuctionNew extends Component {
           <Button onClick={this.handleAddBidder}>Add Another Bidder</Button>
           <br />
           <Message error header="Error" content={this.state.errorMessage} />
-          <Message
-            success
-            header="Success"
-            content={this.state.successMessage}
-          />
-          <Button
-            type="submit"
-            loading={this.state.loading}
-            primary
-            style={{ marginTop: "13px" }}
-          >
+          <Message success header="Success" content={this.state.successMessage} />
+          <Button type="submit" loading={this.state.loading} primary style={{ marginTop: "13px" }}>
             Create Auction
           </Button>
         </Form>

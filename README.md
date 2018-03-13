@@ -11,7 +11,8 @@ The purpose of this DApp is to auction off [Discount Notes](https://www.investop
 Install to your computer:
 
 * [Node.js (LTS is fine)](https://nodejs.org/en/)
-  * If you already have node installed, make sure you have at least version 8.0.0 >= of Node.js. You can check your node version by running this command: 
+  * If you already have node installed, make sure you have at least version 8.0.0 >= of Node.js. You can check your node version by running this command:
+
 ```node
 node -v
 ```
@@ -19,7 +20,7 @@ node -v
 Install to your browser:
 
 * [Metamask](https://chrome.google.com/webstore/search/metamask)
-  * After installing, create an account 
+  * After installing, create an account
   * Make sure you select the Rinkeby Test Network from the top left corner of the extension - by default the Main Ethereum Network will be selected
 
 Navigate to and follow the directions below for the following:
@@ -56,7 +57,7 @@ npm install
 
 ```javascript
 const provider = new HDWalletProvider(
-  "<MetaMask Mnemonic phrase>", 
+  "<MetaMask Mnemonic phrase>",
   "<Infura Provider URL with Access Key>"
 );
 ```
@@ -67,7 +68,7 @@ const provider = new HDWalletProvider(
 node deploy.js
 ```
 
-5. Again modify [ethereum/auction-factory.contract.js](https://github.com/TaraTritt/dn-auction-dapp/blob/master/ethereum/auction-factory.contract.js) to get your deployed contract instance via the address that was logged to the console
+5.  Again modify [ethereum/contract-instances/auction-factory.contract.js](https://github.com/TaraTritt/dn-auction-dapp/blob/master/ethereum/contract-instances/auction-factory.contract.js) to get your deployed contract instance via the address that was logged to the console
 
 * Replace the current address `0x7EbaC0da20592d950932b3b5BB0A1F6d99C2bCe2` with the saved address from the previous deployment step
 
@@ -81,9 +82,7 @@ const instance = new web3.eth.Contract(
 6.  Modify ethereum/web3.js to use your Infura Rinkeby Provider URL, which will be the default provider for web3.js if the user does not have MetaMask installed, otherwise it will use the MetaMask injected provider
 
 ```javascript
-const provider = new Web3.providers.HttpProvider(
-  "<Infura Provider URL with Access Key>"
-);
+const provider = new Web3.providers.HttpProvider("<Infura Provider URL with Access Key>");
 ```
 
 7.  Run your app locally on port 3000. **Make sure to execute this command from the root directory of your project**
@@ -91,5 +90,3 @@ const provider = new Web3.providers.HttpProvider(
 ```shell
 npm start
 ```
-
-
