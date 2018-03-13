@@ -29,6 +29,17 @@ class AuctionShow extends Component {
       userIsAuctionManager: isManager,
       userIsApprovedBidder: isBidder
     });
+
+    auction.events.BidPlaced(
+      {
+        fromBlock: 0,
+        toBlock: "latest"
+      },
+      function(error, event) {
+        console.log(event);
+        console.log("fiurst");
+      }
+    );
   }
 
   static async getInitialProps(props) {
@@ -76,6 +87,17 @@ class AuctionShow extends Component {
               .format("MM/DD/YYYY, h:mm:ss A")}
           </Table.Cell>
           <Table.Cell>{noteDetail.issuer}</Table.Cell>
+          <Table.Cell>
+            <Link
+              route={`/auctions/${this.props.auctionDetail.address}/place-bid`}
+            >
+              <a>
+                <Button primary floated="right">
+                  Place Bid
+                </Button>
+              </a>
+            </Link>
+          </Table.Cell>
         </Table.Row>
       );
     });
@@ -89,6 +111,7 @@ class AuctionShow extends Component {
             <Table.HeaderCell>Purchased Amount</Table.HeaderCell>
             <Table.HeaderCell>Maturity Date</Table.HeaderCell>
             <Table.HeaderCell>Issuer Address</Table.HeaderCell>
+            <Table.HeaderCell />
           </Table.Row>
         </Table.Header>
 
